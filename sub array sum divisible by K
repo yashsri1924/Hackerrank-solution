@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <stdlib.h>
+int subarraysDivByK(int* nums, int numsSize, int k) {
+
+    int* remainder_counts = (int*)calloc(k, sizeof(int));
+    remainder_counts[0] = 1;
+    
+    int current_sum = 0;
+    int count = 0;
+
+    for (int i = 0; i < numsSize; i++) {
+        current_sum += nums[i];
+        int remainder = (current_sum % k + k) % k;
+
+        count += remainder_counts[remainder];
+        
+        remainder_counts[remainder]++;
+    }
+    free(remainder_counts);
+    
+    return count;
+}
